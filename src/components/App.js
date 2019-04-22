@@ -3,10 +3,12 @@ import React, { Component } from 'react';
 import youtube from '../api/youtube';
 import SearchBar from './SearchBar';
 import VideoList from './VideoList';
+import VideoDetail from './VideoDetail';
 
 class App extends Component {
     state = {
         videos: [],
+        selectedVideo: null,
     };
     onTermSubmit = async term => {
         // console.log(`Term: ${term}`);
@@ -22,11 +24,22 @@ class App extends Component {
         // console.log(this.state);
     };
 
+    onVideoSelect = video => {
+        // console.log(video);
+        this.setState({
+            selectedVideo: video,
+        });
+    };
+
     render() {
         return (
             <div className="ui container">
                 <SearchBar onTermSubmit={this.onTermSubmit} />
-                <VideoList videos={this.state.videos} />
+                <VideoDetail video={this.state.selectedVideo} />
+                <VideoList
+                    onVideoSelect={this.onVideoSelect}
+                    videos={this.state.videos}
+                />
             </div>
         );
     }
